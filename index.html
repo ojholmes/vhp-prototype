@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VHP Staff Navigator Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#008080", // Professional Teal
+              "primary-bright": "#2dd4bf", // Teal-400 for high visibility text/accents
+              "background-light": "#f8fafc",
+              "background-dark": "#00101d", // Deep Navy/Black Mix for main background
+              "deep-navy": "#002147", // Brand Deep Navy for Sidebar
+              "card-dark": "#001830", // Dark Navy for cards
+              "border-dark": "#162a45", // Navy border
+              "text-muted": "#94a3b8", // Slate-400
+              "text-subtle": "#64748b", // Slate-500
+              "risk-red": "#D32F2F",
+              "success-green": "#388E3C",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "2xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }.custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 128, 128, 0.3);border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(45, 212, 191, 0.4);
+        }
+        .toast-enter {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        .toast-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 300ms ease-out;
+        }
+        .toast-exit {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast-exit-active {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 300ms ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden h-screen flex selection:bg-primary selection:text-white">
+<div class="flex w-full h-full">
+<aside class="w-20 lg:w-64 flex flex-col justify-between border-r border-border-dark bg-deep-navy py-6 flex-shrink-0 z-20 transition-all duration-300">
+<div class="flex flex-col gap-8 px-4">
+<div class="flex items-center gap-3 justify-center lg:justify-start pl-0 lg:pl-2">
+<div class="size-10 bg-deep-navy border border-primary/50 rounded-lg flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(0,128,128,0.15)]">
+<span class="text-primary-bright font-bold text-xl tracking-tighter">VH</span>
+</div>
+<div class="hidden lg:flex flex-col">
+<h1 class="text-white text-base font-bold leading-none tracking-tight">VHP Navigator</h1>
+<p class="text-text-muted text-xs font-medium uppercase tracking-wider mt-1">GovTech Portal</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg bg-[#002a4d] border border-primary/20 text-white shadow-sm transition-all" href="#">
+<span class="material-symbols-outlined text-primary-bright group-hover:scale-110 transition-transform">supervised_user_circle</span>
+<span class="hidden lg:block text-sm font-medium">Veteran Queue</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#002a4d] text-text-muted hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined group-hover:text-primary-bright transition-colors">map</span>
+<span class="hidden lg:block text-sm font-medium">Geospatial Map</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#002a4d] text-text-muted hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined group-hover:text-primary-bright transition-colors">folder_shared</span>
+<span class="hidden lg:block text-sm font-medium">Document Vault</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#002a4d] text-text-muted hover:text-white transition-all" href="#">
+<span class="material-symbols-outlined group-hover:text-primary-bright transition-colors">assignment_turned_in</span>
+<span class="hidden lg:block text-sm font-medium">Compliance</span>
+</a>
+</nav>
+</div>
+<div class="px-4 flex flex-col gap-4">
+<div class="h-px w-full bg-border-dark/50"></div>
+<button class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#002a4d] text-text-muted transition-colors justify-center lg:justify-start">
+<span class="material-symbols-outlined">settings</span>
+<span class="hidden lg:block text-sm font-medium">Settings</span>
+</button>
+<div class="flex items-center gap-3 px-2 py-2 justify-center lg:justify-start">
+<div class="size-8 rounded-full bg-cover bg-center border border-primary/30" data-alt="User profile picture of a federal staff member" style='background-image: url("assets/user-profile.jpg");'></div>
+<div class="hidden lg:flex flex-col">
+<p class="text-white text-xs font-bold">Agent K. Miller</p>
+<p class="text-primary-bright text-[10px] uppercase font-semibold">Level 4 Clearance</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background-dark">
+<header class="h-20 border-b border-border-dark bg-card-dark/95 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-10">
+<div class="flex items-center gap-4 flex-1 max-w-3xl">
+<div class="relative flex-1 group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-text-subtle group-focus-within:text-primary-bright transition-colors">search</span>
+</div>
+<input class="block w-full pl-12 pr-4 py-2.5 bg-background-dark border border-border-dark rounded-full text-sm text-white placeholder-text-subtle focus:border-primary/40 focus:ring-1 focus:ring-primary/40 transition-all outline-none" placeholder="Search by Veteran ID, SSVF Status, or Housing Property..." type="text"/>
+<div class="absolute inset-y-0 right-2 flex items-center">
+<button class="flex items-center gap-1.5 bg-border-dark hover:bg-[#002a4d] text-xs font-medium text-white px-3 py-1.5 rounded-full transition-colors border border-white/5">
+<span>Advanced Filters</span>
+<span class="material-symbols-outlined text-[16px]">tune</span>
+</button>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-6 ml-6">
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-2 bg-background-dark border border-primary/20 px-3 py-1.5 rounded-full">
+<span class="relative flex h-2.5 w-2.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-primary"></span>
+</span>
+<span class="text-[11px] font-bold text-primary-bright tracking-wide uppercase">System Secure: HIPAA BAA-Ready</span>
+</div>
+</div>
+<button class="relative p-2 text-text-muted hover:text-white transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-risk-red rounded-full border border-card-dark"></span>
+</button>
+</div>
+</header>
+<div class="flex-1 overflow-hidden p-6">
+<div class="grid grid-cols-12 gap-6 h-full">
+<div class="col-span-12 lg:col-span-4 flex flex-col gap-4 h-full min-w-0">
+<div class="flex items-center justify-between shrink-0">
+<h2 class="text-white text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-risk-red">warning</span>
+                            High-Risk Feed
+                        </h2>
+<span class="text-xs text-text-muted bg-border-dark px-2 py-1 rounded border border-white/5">12 Critical</span>
+</div>
+<div class="flex-1 overflow-y-auto custom-scrollbar pr-2 flex flex-col gap-3">
+<div class="bg-card-dark border border-primary/40 border-l-4 border-l-primary rounded-lg p-4 flex flex-col gap-3 group transition-all shadow-lg relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2 opacity-50">
+<span class="material-symbols-outlined text-primary-bright text-4xl opacity-10">verified_user</span>
+</div>
+<div class="flex items-start justify-between relative z-10">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h3 class="text-white font-bold text-base" id="vet-name">Sgt. D. Robinson</h3>
+<span class="bg-risk-red/10 text-risk-red text-[10px] font-bold px-1.5 py-0.5 rounded uppercase border border-risk-red/20 transition-colors duration-300" id="vet-status">Eviction Imminent</span>
+</div>
+<p class="text-text-muted text-xs">ID: #883-29-VHP • Branch: USMC</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="relative size-12 flex items-center justify-center rounded-full border-4 border-background-dark border-t-risk-red border-r-risk-red bg-background-dark transition-all duration-300" id="risk-score-container">
+<span class="text-white font-bold text-sm" id="risk-score-display">92</span>
+</div>
+<span class="text-[9px] text-text-subtle font-bold uppercase tracking-wider">Gemini Score</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-2 border-t border-white/5">
+<span class="text-[11px] text-text-muted">Action Required: Verification</span>
+<div class="flex gap-2">
+<button class="bg-transparent hover:bg-white/5 border border-white/10 text-white text-xs px-3 py-1.5 rounded transition-colors" onclick="alert('Viewing details...')">Details</button>
+<button class="bg-primary hover:bg-primary-bright text-background-dark font-bold text-xs px-3 py-1.5 rounded transition-colors shadow-lg shadow-primary/20 flex items-center gap-1" id="approve-btn" onclick="updateVeteranStatus()">
+<span class="material-symbols-outlined text-[14px]">check</span>
+                                        Approve
+                                    </button>
+</div>
+</div>
+</div>
+<div class="bg-card-dark hover:bg-[#002140] border border-border-dark border-l-4 border-l-risk-red rounded-lg p-4 flex items-start justify-between group cursor-pointer transition-all shadow-sm opacity-60 hover:opacity-100">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h3 class="text-white font-bold text-base">Pvt. S. Chen</h3>
+<span class="bg-orange-500/10 text-orange-400 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase border border-orange-500/20">Missing Docs</span>
+</div>
+<p class="text-text-muted text-xs">ID: #442-10-VHP • Branch: Army</p>
+<div class="mt-2 flex gap-2">
+<span class="text-[11px] text-text-muted bg-background-dark px-2 py-1 rounded border border-border-dark">HUD-VASH</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="relative size-12 flex items-center justify-center rounded-full border-4 border-background-dark border-t-risk-red border-l-risk-red bg-background-dark">
+<span class="text-white font-bold text-sm">84</span>
+</div>
+<span class="text-[9px] text-text-subtle font-bold uppercase tracking-wider">Gemini Score</span>
+</div>
+</div>
+<div class="bg-card-dark hover:bg-[#002140] border border-border-dark border-l-4 border-l-yellow-500 rounded-lg p-4 flex items-start justify-between group cursor-pointer transition-all opacity-60 hover:opacity-100 shadow-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h3 class="text-white font-bold text-base">Cpl. M. Davis</h3>
+<span class="bg-yellow-500/10 text-yellow-400 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase border border-yellow-500/20">Review</span>
+</div>
+<p class="text-text-muted text-xs">ID: #102-99-VHP • Branch: Navy</p>
+<div class="mt-2 flex gap-2">
+<span class="text-[11px] text-text-muted bg-background-dark px-2 py-1 rounded border border-border-dark">SSVF: Active</span>
+</div>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="relative size-12 flex items-center justify-center rounded-full border-4 border-background-dark border-t-yellow-500 bg-background-dark">
+<span class="text-white font-bold text-sm">71</span>
+</div>
+<span class="text-[9px] text-text-subtle font-bold uppercase tracking-wider">Gemini Score</span>
+</div>
+</div>
+<div class="bg-card-dark hover:bg-[#002140] border border-border-dark border-l-4 border-l-primary rounded-lg p-4 flex items-start justify-between group cursor-pointer transition-all opacity-60 hover:opacity-100 shadow-sm">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<h3 class="text-white font-bold text-base">Lt. J. Doe</h3>
+<span class="bg-primary/10 text-primary-bright text-[10px] font-bold px-1.5 py-0.5 rounded uppercase border border-primary/20">Placing</span>
+</div>
+<p class="text-text-muted text-xs">ID: #992-11-VHP • Branch: USAF</p>
+</div>
+<div class="flex flex-col items-center gap-1">
+<div class="relative size-12 flex items-center justify-center rounded-full border-4 border-background-dark border-t-primary bg-background-dark">
+<span class="text-white font-bold text-sm">42</span>
+</div>
+<span class="text-[9px] text-text-subtle font-bold uppercase tracking-wider">Gemini Score</span>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-5 flex flex-col gap-4 h-full min-w-0">
+<div class="flex items-center justify-between shrink-0">
+<h2 class="text-white text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-bright">public</span>
+                            Geospatial Placement
+                        </h2>
+<div class="flex gap-2">
+<button class="size-8 flex items-center justify-center rounded bg-border-dark text-white hover:bg-primary/80 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">add</span>
+</button>
+<button class="size-8 flex items-center justify-center rounded bg-border-dark text-white hover:bg-primary/80 hover:text-white transition-colors">
+<span class="material-symbols-outlined text-[18px]">remove</span>
+</button>
+</div>
+</div>
+<div class="flex-1 bg-card-dark rounded-xl border border-border-dark overflow-hidden relative group">
+<div class="absolute inset-0 bg-cover bg-center opacity-40 group-hover:opacity-60 transition-opacity duration-500 grayscale" data-alt="Dark mode stylized map of Washington DC city streets with data overlays" data-location="Washington DC" style='background-image: url("assets/map.jpg");'>
+</div>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90"></div>
+<div class="absolute top-[30%] left-[45%] flex flex-col items-center group/pin cursor-pointer">
+<div class="size-4 bg-primary rounded-full shadow-[0_0_15px_#008080] animate-pulse border border-white/20"></div>
+<div class="mt-2 bg-card-dark/95 backdrop-blur px-3 py-1 rounded border border-primary/30 opacity-0 group-hover/pin:opacity-100 transition-opacity">
+<p class="text-xs font-bold text-white">4 Units Available</p>
+</div>
+</div>
+<div class="absolute top-[55%] left-[25%] flex flex-col items-center group/pin cursor-pointer">
+<div class="size-3 bg-risk-red rounded-full shadow-[0_0_15px_#D32F2F] border border-white/20"></div>
+<div class="mt-2 bg-card-dark/95 backdrop-blur px-3 py-1 rounded border border-risk-red/30 opacity-0 group-hover/pin:opacity-100 transition-opacity">
+<p class="text-xs font-bold text-white">Veteran Location (High Risk)</p>
+</div>
+</div>
+<div class="absolute top-[40%] right-[30%] flex flex-col items-center group/pin cursor-pointer">
+<div class="size-3 bg-white/80 rounded-full shadow-[0_0_10px_white]"></div>
+</div>
+<div class="absolute bottom-4 left-4 right-4 bg-card-dark/90 backdrop-blur-md rounded-lg p-4 border border-border-dark flex justify-between items-center shadow-lg">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-primary"></div>
+<span class="text-xs text-text-muted">Available Housing</span>
+</div>
+<div class="flex items-center gap-2">
+<div class="size-2 rounded-full bg-risk-red"></div>
+<span class="text-xs text-text-muted">At-Risk Veteran</span>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-text-subtle uppercase tracking-wider">Total Veterans Housed</p>
+<p class="text-primary-bright font-bold text-lg leading-none" id="total-housed-count">Loading...</p>
+</div>
+</div>
+</div>
+</div>
+<div class="col-span-12 lg:col-span-3 flex flex-col gap-4 h-full min-w-0">
+<div class="flex items-center justify-between shrink-0">
+<h2 class="text-white text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-white">bolt</span>
+                            Action Center
+                        </h2>
+</div>
+<div class="flex flex-col gap-4 h-full">
+<div class="bg-card-dark p-4 rounded-xl border border-border-dark flex flex-col gap-3 shadow-sm">
+<p class="text-[11px] text-text-subtle font-bold uppercase tracking-wider ml-1">Quick Tasks</p>
+<button class="group w-full flex items-center justify-between p-1 pr-4 bg-border-dark hover:bg-[#002a4d] hover:border-primary/30 text-white rounded-full transition-all duration-300 border border-transparent">
+<div class="size-9 rounded-full bg-background-dark text-white flex items-center justify-center shrink-0 group-hover:bg-primary/20 group-hover:text-primary-bright transition-colors">
+<span class="material-symbols-outlined text-[18px]">play_arrow</span>
+</div>
+<span class="font-bold text-sm">Initialize Briefing</span>
+</button>
+<button class="group w-full flex items-center justify-between p-1 pr-4 bg-border-dark hover:bg-[#002a4d] text-white rounded-full transition-all duration-300 border border-transparent hover:border-slate-600">
+<div class="size-9 rounded-full bg-background-dark text-white flex items-center justify-center shrink-0 group-hover:text-primary-bright transition-colors">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</div>
+<span class="font-bold text-sm text-text-muted group-hover:text-white">Generate VA Report</span>
+</button>
+<button class="group w-full flex items-center justify-between p-1 pr-4 bg-transparent border border-primary/30 text-white hover:bg-primary/5 rounded-full transition-all duration-300">
+<div class="size-9 rounded-full bg-primary/10 text-primary-bright flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</div>
+<span class="font-bold text-sm text-primary-bright">Contact Landlord</span>
+</button>
+</div>
+<div class="flex-1 bg-card-dark rounded-xl border border-border-dark p-5 flex flex-col shadow-sm">
+<div class="flex justify-between items-center mb-4">
+<p class="text-[11px] text-text-subtle font-bold uppercase tracking-wider">Recent Audit Log</p>
+<span class="text-[10px] text-primary cursor-pointer hover:underline">View all</span>
+</div>
+<div class="flex flex-col gap-4 overflow-y-auto custom-scrollbar flex-1" id="audit-log-list">
+<div class="flex gap-3 relative pb-4 border-l border-border-dark pl-4 last:border-0 opacity-50">
+<div class="absolute -left-[5px] top-0 size-2.5 rounded-full bg-slate-600 ring-4 ring-card-dark"></div>
+<div class="flex flex-col gap-0.5">
+<p class="text-white text-xs font-bold">Connecting to Supabase...</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<div class="fixed bottom-6 right-6 z-50 transform transition-all duration-300 translate-y-full opacity-0" id="success-toast">
+<div class="bg-card-dark border border-success-green/50 rounded-lg shadow-2xl p-4 flex items-center gap-3 w-80 relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-success-green"></div>
+<div class="size-8 rounded-full bg-success-green/20 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-success-green text-xl">check_circle</span>
+</div>
+<div class="flex flex-col">
+<h4 class="text-white text-sm font-bold">Update Successful</h4>
+<p class="text-text-muted text-xs">Veteran record updated in Supabase.</p>
+</div>
+</div>
+</div>
+<script>
+    const supabaseUrl = 'https://qfymdqmqtrphxoqnipze.supabase.co';
+    const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFmeW1kcW1xdHJwaHhvcW5pcHplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5NjU2MDcsImV4cCI6MjA4MTU0MTYwN30.rLl934YDxsYBChz779mfeKnUa4ayMFLyjqu7_XmGn5U';
+    const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    async function loadVeteranData() {
+        try {
+            // Updating UI to loading state
+            document.getElementById('vet-name').innerText = 'Loading...';
+            document.getElementById('vet-status').innerText = '...';
+            const { data, error } = await _supabase
+                .from('veterans')
+                .select('*')
+                .eq('name', 'Sgt. James Miller')
+                .single();
+            if (error) {
+                console.error('Supabase Error:', error);
+                // Fallback for demo visualization if database connection fails or record doesn't exist
+                document.getElementById('vet-name').innerText = 'Sgt. James Miller';
+                document.getElementById('vet-status').innerText = 'Immediate Action';
+                document.getElementById('risk-score-display').innerText = '95';
+                return;
+            }
+            if (data) {
+                document.getElementById('vet-name').innerText = data.name;
+                document.getElementById('vet-status').innerText = data.status || 'Active';
+                document.getElementById('risk-score-display').innerText = data.risk_score || '0';
+                // Update color based on score or status if needed
+                updateRiskScoreVisuals(data.risk_score);
+            }
+        } catch (err) {
+            console.error('Connection Error:', err);
+             // Fail-safe display
+             document.getElementById('vet-name').innerText = 'Sgt. James Miller';
+             document.getElementById('vet-status').innerText = 'System Offline';
+             document.getElementById('risk-score-display').innerText = '99';
+        }
+    }
+    async function updateVeteranStatus() {
+        const btn = document.getElementById('approve-btn');
+        const originalText = btn.innerHTML;
+        // Show loading state on button
+        btn.disabled = true;
+        btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-[14px]">sync</span> Updating...`;
+        try {
+            const { data, error } = await _supabase
+                .from('veterans')
+                .update({ status: 'Documentation Verified', risk_score: 70 })
+                .eq('name', 'Sgt. James Miller')
+                .select();
+            if (error) throw error;
+            // Update UI immediately to reflect changes
+            document.getElementById('vet-status').innerText = 'Documentation Verified';
+            document.getElementById('vet-status').className = 'bg-success-green/10 text-success-green text-[10px] font-bold px-1.5 py-0.5 rounded uppercase border border-success-green/20 transition-colors duration-300';
+            document.getElementById('risk-score-display').innerText = '70';
+            updateRiskScoreVisuals(70);
+            // Inject the "Voucher Issued" log entry dynamically
+            const auditLogContainer = document.getElementById('audit-log-list');
+            // Create the new entry HTML
+            const newEntry = document.createElement('div');
+            newEntry.className = "flex gap-3 relative pb-4 border-l border-border-dark pl-4 last:border-0 animate-fade-in";
+            newEntry.innerHTML = `
+                <div class="absolute -left-[5px] top-0 size-2.5 rounded-full bg-success-green ring-4 ring-card-dark"></div>
+                <div class="flex flex-col gap-0.5">
+                    <p class="text-white text-xs font-bold flex items-center gap-2">
+                        Voucher Issued
+                        <span class="bg-success-green/20 text-success-green text-[9px] px-1.5 rounded uppercase border border-success-green/30">Success</span>
+                    </p>
+                    <p class="text-text-muted text-[10px] leading-tight">Sgt. James Miller verified. Moving to housing.</p>
+                    <p class="text-text-subtle text-[9px] mt-1">Just now</p>
+                </div>
+            `;
+            // Insert at the top
+            if (auditLogContainer) {
+                auditLogContainer.insertBefore(newEntry, auditLogContainer.firstChild);
+            }
+            // Show Toast
+            showToast();
+        } catch (err) {
+            console.error('Update Error:', err);
+            alert('Failed to update veteran status. Please try again.');
+        } finally {
+            // Reset button
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    }
+    function updateRiskScoreVisuals(score) {
+        const container = document.getElementById('risk-score-container');
+        if (score < 75) {
+            // Lower risk -> Green/Teal borders
+            container.className = "relative size-12 flex items-center justify-center rounded-full border-4 border-background-dark border-t-primary border-r-primary bg-background-dark transition-all duration-300";
+        } else {
+            // High risk -> Red borders
+            container.className = "relative size-12 flex items-center justify-center rounded-full border-4 border-background-dark border-t-risk-red border-r-risk-red bg-background-dark transition-all duration-300";
+        }
+    }
+    function showToast() {
+        const toast = document.getElementById('success-toast');
+        toast.classList.remove('translate-y-full', 'opacity-0');
+        setTimeout(() => {
+            toast.classList.add('translate-y-full', 'opacity-0');
+        }, 3000);
+    }
+    async function loadDashboardStats() {
+        // 1. Fetch Total Veterans Housed
+        try {
+            const { count, error } = await _supabase
+                .from('veterans')
+                .select('*', { count: 'exact', head: true })
+                .eq('status', 'Housed');
+            const countDisplay = document.getElementById('total-housed-count');
+            if (!error && count !== null) {
+                countDisplay.innerText = count.toLocaleString();
+            } else {
+                // Mock data fallback if table doesn't exist
+                countDisplay.innerText = "1,248";
+            }
+        } catch (e) {
+            console.log("Error fetching housed count", e);
+            document.getElementById('total-housed-count').innerText = "1,248";
+        }
+        // 2. Fetch Recent Audit Log
+        try {
+            const { data: logs, error: logError } = await _supabase
+                .from('audit_log')
+                .select('*')
+                .order('created_at', { ascending: false })
+                .limit(3);
+            const listContainer = document.getElementById('audit-log-list');
+            if (!logError && logs && logs.length > 0) {
+                listContainer.innerHTML = ''; // Clear loading state
+                logs.forEach(log => {
+                    const timeAgo = new Date(log.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    // Determine color based on action type (simple heuristic)
+                    let dotColor = 'bg-slate-600';
+                    if (log.action?.includes('Update')) dotColor = 'bg-primary';
+                    if (log.action?.includes('Placement') || log.action?.includes('Success')) dotColor = 'bg-success-green';
+                    if (log.action?.includes('Alert')) dotColor = 'bg-risk-red';
+                    const itemHtml = `
+                    <div class="flex gap-3 relative pb-4 border-l border-border-dark pl-4 last:border-0">
+                        <div class="absolute -left-[5px] top-0 size-2.5 rounded-full ${dotColor} ring-4 ring-card-dark"></div>
+                        <div class="flex flex-col gap-0.5">
+                            <p class="text-white text-xs font-bold">${log.action || 'System Event'}</p>
+                            <p class="text-text-muted text-[10px] leading-tight">${log.details || 'Log entry details unavailable.'}</p>
+                            <p class="text-text-subtle text-[9px] mt-1">${timeAgo}</p>
+                        </div>
+                    </div>`;
+                    listContainer.innerHTML += itemHtml;
+                });
+            } else {
+                // Fallback content if no logs found or error
+                listContainer.innerHTML = `
+                    <div class="flex gap-3 relative pb-4 border-l border-border-dark pl-4 last:border-0">
+                        <div class="absolute -left-[5px] top-0 size-2.5 rounded-full bg-success-green ring-4 ring-card-dark"></div>
+                        <div class="flex flex-col gap-0.5">
+                            <p class="text-white text-xs font-bold">Placement Confirmed</p>
+                            <p class="text-text-muted text-[10px] leading-tight">Veteran #882 housed at Oakwood Apts.</p>
+                            <p class="text-text-subtle text-[9px] mt-1">2m ago</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 relative pb-4 border-l border-border-dark pl-4 last:border-0">
+                        <div class="absolute -left-[5px] top-0 size-2.5 rounded-full bg-primary ring-4 ring-card-dark"></div>
+                        <div class="flex flex-col gap-0.5">
+                            <p class="text-white text-xs font-bold">New Form 10-10EZ</p>
+                            <p class="text-text-muted text-[10px] leading-tight">Uploaded to Document Vault.</p>
+                            <p class="text-text-subtle text-[9px] mt-1">15m ago</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 relative pb-4 border-l border-border-dark pl-4 last:border-0">
+                        <div class="absolute -left-[5px] top-0 size-2.5 rounded-full bg-slate-600 ring-4 ring-card-dark"></div>
+                        <div class="flex flex-col gap-0.5">
+                            <p class="text-white text-xs font-bold">System Update</p>
+                            <p class="text-text-muted text-[10px] leading-tight">Patch 4.2 applied successfully.</p>
+                            <p class="text-text-subtle text-[9px] mt-1">1h ago</p>
+                        </div>
+                    </div>
+                `;
+            }
+        } catch (e) {
+            console.error("Audit log fetch error", e);
+        }
+    }
+    // Load data when page is ready
+    document.addEventListener('DOMContentLoaded', () => {
+        loadVeteranData();
+        loadDashboardStats();
+    });
+</script>
+
+</body></html>
