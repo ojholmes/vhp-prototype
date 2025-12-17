@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Veteran Home Dashboard</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#008080", // Professional Teal
+              "primary-bright": "#2dd4bf", // Teal-400 for high visibility text/accents
+              "background-light": "#f8fafc",
+              "background-dark": "#00101d", // Deep Navy/Black Mix for main background
+              "deep-navy": "#002147", // Brand Deep Navy for Sidebar
+              "card-dark": "#001830", // Dark Navy for cards
+              "border-dark": "#162a45", // Navy border
+              "text-muted": "#94a3b8", // Slate-400
+              "text-subtle": "#64748b", // Slate-500
+              "risk-red": "#D32F2F",
+              "success-green": "#388E3C",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.5rem", "lg": "0.75rem", "xl": "1rem", "2xl": "1.5rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }.custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(0, 128, 128, 0.3);border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(45, 212, 191, 0.4);
+        }
+        .toast-enter {
+            transform: translateY(100%);
+            opacity: 0;
+        }
+        .toast-enter-active {
+            transform: translateY(0);
+            opacity: 1;
+            transition: all 300ms ease-out;
+        }
+        .toast-exit {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .toast-exit-active {
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 300ms ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display overflow-hidden h-screen flex selection:bg-primary selection:text-white">
+<div class="flex w-full h-full">
+<aside class="w-20 lg:w-64 flex flex-col justify-between border-r border-border-dark bg-deep-navy py-6 flex-shrink-0 z-20 transition-all duration-300">
+<div class="flex flex-col gap-8 px-4">
+<div class="flex items-center gap-3 justify-center lg:justify-start pl-0 lg:pl-2">
+<div class="size-10 bg-deep-navy border border-primary/50 rounded-lg flex items-center justify-center shrink-0 shadow-[0_0_15px_rgba(0,128,128,0.15)]">
+<span class="text-primary-bright font-bold text-xl tracking-tighter">VH</span>
+</div>
+<div class="hidden lg:flex flex-col">
+<h1 class="text-white text-base font-bold leading-none tracking-tight">VHP Navigator</h1>
+<p class="text-text-muted text-xs font-medium uppercase tracking-wider mt-1">GovTech Portal</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2 mt-4">
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#002a4d] text-text-muted hover:text-white transition-all" href="staff.html">
+<span class="material-symbols-outlined group-hover:text-primary-bright transition-colors">supervised_user_circle</span>
+<span class="hidden lg:block text-sm font-medium">Staff Navigator</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#002a4d] text-text-muted hover:text-white transition-all" href="audit.html">
+<span class="material-symbols-outlined group-hover:text-primary-bright transition-colors">gavel</span>
+<span class="hidden lg:block text-sm font-medium">Federal Audit</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#002a4d] text-text-muted hover:text-white transition-all" href="partners.html">
+<span class="material-symbols-outlined group-hover:text-primary-bright transition-colors">handshake</span>
+<span class="hidden lg:block text-sm font-medium">Partner Reporting</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#002a4d] text-text-muted hover:text-white transition-all" href="portal.html">
+<span class="material-symbols-outlined group-hover:text-primary-bright transition-colors">person</span>
+<span class="hidden lg:block text-sm font-medium">Veteran Portal</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg bg-[#002a4d] border border-primary/20 text-white shadow-sm transition-all" href="home.html">
+<span class="material-symbols-outlined text-primary-bright group-hover:scale-110 transition-transform">home</span>
+<span class="hidden lg:block text-sm font-medium">Veteran Home</span>
+</a>
+<a class="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-[#002a4d] text-text-muted hover:text-white transition-all" href="landlord.html">
+<span class="material-symbols-outlined group-hover:text-primary-bright transition-colors">apartment</span>
+<span class="hidden lg:block text-sm font-medium">Landlord Index</span>
+</a>
+</nav>
+</div>
+<div class="px-4 flex flex-col gap-4">
+<div class="h-px w-full bg-border-dark/50"></div>
+<button class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-[#002a4d] text-text-muted transition-colors justify-center lg:justify-start">
+<span class="material-symbols-outlined">settings</span>
+<span class="hidden lg:block text-sm font-medium">Settings</span>
+</button>
+<div class="flex items-center gap-3 px-2 py-2 justify-center lg:justify-start">
+<div class="size-8 rounded-full bg-cover bg-center border border-primary/30" data-alt="User profile picture of a federal staff member" style='background-image: url("assets/user-profile.jpg");'></div>
+<div class="hidden lg:flex flex-col">
+<p class="text-white text-xs font-bold">Agent K. Miller</p>
+<p class="text-primary-bright text-[10px] uppercase font-semibold">Level 4 Clearance</p>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 flex flex-col h-full overflow-hidden relative bg-background-dark">
+<header class="h-20 border-b border-border-dark bg-card-dark/95 backdrop-blur-md flex items-center justify-between px-6 shrink-0 z-10">
+    <h1 class="text-2xl font-bold text-white">Veteran Home Dashboard</h1>
+</header>
+<div class="flex-1 overflow-hidden p-6">
+    <!-- Placeholder for Veteran Home content -->
+</div>
+</main>
+</div>
+<script>
+    // Scripts can be added here if needed
+</script>
+</body></html>
