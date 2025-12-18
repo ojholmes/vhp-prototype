@@ -4,50 +4,64 @@
     <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>VHP | Geospatial Intelligence</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200..800&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#008080", "primary-bright": "#2dd4bf", "background-dark": "#00101d", "deep-navy": "#002147", "card-dark": "#001830", "border-dark": "#162a45", "text-muted": "#94a3b8" } } } }
     </script>
-    <style> .radar-grid { background-image: radial-gradient(circle, #162a45 1px, transparent 1px); background-size: 30px 30px; } </style>
 </head>
 <body class="bg-background-dark text-white font-sans overflow-hidden h-screen flex">
     <aside class="w-64 border-r border-border-dark bg-deep-navy py-6 shrink-0 flex flex-col">
-        <div class="px-6 mb-8 flex items-center gap-2"><div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-xs">VH</div><span class="text-primary-bright font-bold text-lg">Navigator</span></div>
-        <nav class="flex flex-col gap-2 px-4">
-            <a href="index.html" class="text-text-muted hover:bg-white/5 flex items-center gap-3 px-3 py-2 rounded-lg"><span class="material-symbols-outlined">supervised_user_circle</span><span class="text-sm font-medium">Veteran Queue</span></a>
-            <a href="landlord.html" class="text-text-muted hover:bg-white/5 flex items-center gap-3 px-3 py-2 rounded-lg"><span class="material-symbols-outlined">real_estate_agent</span><span class="text-sm font-medium">Landlord Portal</span></a>
-            <a href="partners.html" class="bg-primary/20 text-white border border-primary/30 flex items-center gap-3 px-3 py-2 rounded-lg"><span class="material-symbols-outlined text-primary-bright">map</span><span class="text-sm font-medium">Geospatial Map</span></a>
-            <a href="portal.html" class="text-text-muted hover:bg-white/5 flex items-center gap-3 px-3 py-2 rounded-lg"><span class="material-symbols-outlined">encrypted</span><span class="text-sm font-medium">Document Vault</span></a>
-            <a href="ai.html" class="text-text-muted hover:bg-white/5 flex items-center gap-3 px-3 py-2 rounded-lg"><span class="material-symbols-outlined">psychology</span><span class="text-sm font-medium">AI Command</span></a>
-            <a href="audit.html" class="text-text-muted hover:bg-white/5 flex items-center gap-3 px-3 py-2 rounded-lg"><span class="material-symbols-outlined">assignment_turned_in</span><span class="text-sm font-medium">Federal Audit</span></a>
+        <div class="px-6 mb-8 flex items-center gap-2"><div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-xs">VH</div><span class="text-primary-bright font-bold text-lg tracking-tighter">VHP Navigator</span></div>
+        <nav class="flex flex-col gap-1 px-4">
+            <a href="index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined text-sm">supervised_user_circle</span><span class="text-sm">Veteran Queue</span></a>
+            <a href="landlord.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined text-sm">real_estate_agent</span><span class="text-sm">Landlord Portal</span></a>
+            <a href="partners.html" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white shadow-lg"><span class="material-symbols-outlined text-sm">map</span><span class="text-sm font-bold">Geospatial Map</span></a>
+            <a href="portal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined text-sm">encrypted</span><span class="text-sm">Document Vault</span></a>
+            <a href="ai.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined text-sm">psychology</span><span class="text-sm">AI Command Center</span></a>
+            <a href="audit.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined text-sm">assignment_turned_in</span><span class="text-sm">Federal Audit</span></a>
         </nav>
     </aside>
 
-    <main class="flex-1 flex flex-col relative overflow-hidden">
+    <main class="flex-1 flex flex-col relative">
         <header class="h-20 border-b border-border-dark flex items-center justify-between px-8 bg-card-dark z-20">
-            <h2 class="text-xl font-black tracking-tighter uppercase">Geospatial Intel Engine</h2>
-            <div class="text-[10px] font-bold text-primary-bright uppercase tracking-widest px-3 py-1 bg-primary/10 border border-primary/30 rounded">Fayetteville-Grid-01</div>
+            <h2 class="text-xl font-black italic uppercase">Placement Intelligence</h2>
+            <div class="flex items-center gap-4">
+                <div class="text-[10px] font-bold text-primary-bright border border-primary/30 px-3 py-1 rounded bg-primary/10">LIVE GRID: 35.0527° N, 78.8784° W</div>
+            </div>
         </header>
 
-        <div class="flex-1 bg-background-dark radar-grid relative overflow-hidden">
-            <img src="https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/-78.8784,35.0527,11,0/1200x800?access_token=pk.eyJ1IjoiY29tcGFzcy1kZW1vIiwiYSI6ImNscW9ycW1xejBicmkyanA0M3h4ZzZ4eXgifQ==" class="absolute inset-0 w-full h-full object-cover grayscale opacity-20" alt="Mapping Satellite Data">
-            
-            <div class="absolute top-[40%] left-[50%] flex flex-col items-center">
-                <div class="size-24 bg-primary-bright/10 rounded-full animate-ping absolute -inset-10 border border-primary-bright/20"></div>
-                <div class="size-5 bg-primary-bright rounded-full border-2 border-white relative shadow-[0_0_20px_#2dd4bf]"></div>
-                <div class="mt-4 bg-card-dark/95 border border-primary/50 p-4 rounded-xl shadow-2xl w-48 backdrop-blur-sm">
-                    <p class="text-[9px] font-black text-primary-bright uppercase mb-1">Target Identified</p>
-                    <p class="text-xs font-bold">Sgt. James Miller</p>
-                    <p class="text-[9px] text-text-muted mt-1 uppercase">Radius: 0.8mi to VA Center</p>
+        <div class="flex-1 bg-background-dark relative overflow-hidden flex items-center justify-center">
+            <svg class="absolute inset-0 w-full h-full opacity-20" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+                <defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#162a45" stroke-width="1"/></pattern></defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+                <path d="M100,100 L200,80 L350,150 L500,120 L650,250 L400,450 L150,400 Z" fill="none" stroke="#008080" stroke-width="2" stroke-dasharray="5,5" />
+            </svg>
+
+            <div class="relative z-10 flex flex-col items-center">
+                <div class="size-20 bg-primary-bright/20 rounded-full animate-ping absolute -top-8"></div>
+                <span class="material-symbols-outlined text-primary-bright text-4xl shadow-2xl">location_on</span>
+                <div class="mt-4 bg-card-dark border border-primary/50 p-4 rounded-xl shadow-2xl w-64 backdrop-blur-md">
+                    <p class="text-[9px] font-black text-primary-bright uppercase">Verified Location</p>
+                    <p class="text-sm font-bold">Sgt. James Miller</p>
+                    <div class="mt-2 flex justify-between text-[10px] text-text-muted border-t border-white/10 pt-2">
+                        <span>Distance to VA:</span>
+                        <span class="text-white font-bold">0.8 Miles</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="absolute bottom-10 left-10 bg-card-dark border border-border-dark p-6 rounded-2xl shadow-2xl w-64">
-                <h4 class="text-[10px] font-black text-text-muted uppercase mb-4 tracking-widest">Heatmap Index</h4>
-                <div class="space-y-3">
-                    <div class="flex items-center gap-3"><div class="size-2 rounded-full bg-red-500"></div><span class="text-xs uppercase font-bold">Unsheltered Priority</span></div>
-                    <div class="flex items-center gap-3"><div class="size-2 rounded-full bg-primary-bright"></div><span class="text-xs uppercase font-bold">Approved VHP Partner</span></div>
+            <div class="absolute bottom-8 right-8 bg-card-dark/90 border border-border-dark p-6 rounded-2xl w-72 shadow-2xl backdrop-blur-xl">
+                <h4 class="text-[10px] font-black text-text-muted uppercase mb-4 tracking-widest border-b border-white/5 pb-2">Geospatial Legend</h4>
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="size-2.5 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.8)]"></div>
+                        <div class="flex-1"><p class="text-[11px] font-bold">Unsheltered Clusters</p><p class="text-[9px] text-text-muted uppercase">Priority Tier 1</p></div>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <div class="size-2.5 rounded-full bg-primary-bright shadow-[0_0_10px_rgba(45,212,191,0.8)]"></div>
+                        <div class="flex-1"><p class="text-[11px] font-bold">Active Housing Partners</p><p class="text-[9px] text-text-muted uppercase">Available Units</p></div>
+                    </div>
                 </div>
             </div>
         </div>
