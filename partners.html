@@ -2,7 +2,7 @@
 <html class="dark" lang="en">
 <head>
     <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>VHP Geospatial Map</title>
+    <title>VHP | Geospatial Map</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200..800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
@@ -12,8 +12,8 @@
 </head>
 <body class="bg-background-dark text-white font-display overflow-hidden h-screen flex">
     <div class="flex w-full h-full">
-        <aside class="w-64 flex flex-col border-r border-border-dark bg-deep-navy py-6 shrink-0">
-            <div class="px-6 mb-8 flex items-center gap-2"><div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-white">VH</div><span class="text-primary-bright font-bold text-lg">Navigator</span></div>
+        <aside class="w-64 flex flex-col border-r border-border-dark bg-deep-navy py-6 shrink-0 z-20">
+            <div class="px-6 mb-8 flex items-center gap-2"><div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-white text-xs">VH</div><span class="text-primary-bright font-bold text-lg">Navigator</span></div>
             <nav class="flex flex-col gap-2 px-4">
                 <a href="index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5 transition-all"><span class="material-symbols-outlined">supervised_user_circle</span><span class="text-sm">Veteran Queue</span></a>
                 <a href="landlord.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5 transition-all"><span class="material-symbols-outlined">real_estate_agent</span><span class="text-sm">Landlord Portal</span></a>
@@ -23,8 +23,22 @@
             </nav>
         </aside>
         <main class="flex-1 flex flex-col overflow-hidden relative">
-            <header class="h-20 border-b border-border-dark flex items-center justify-between px-8 bg-card-dark shrink-0 z-10"><h2 class="text-xl font-bold">Placement Intelligence Map</h2></header>
-            <div class="flex-1 bg-[#001524] relative overflow-hidden"><div class="absolute inset-0 opacity-40 grayscale" style="background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b1/Blank_Map_of_the_United_States.svg'); background-size: cover; background-position: center;"></div><div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"><div class="size-4 bg-primary rounded-full animate-ping absolute"></div><div class="size-4 bg-primary rounded-full relative border border-white/50"></div><div class="mt-4 bg-card-dark/95 backdrop-blur border border-primary/40 p-3 rounded shadow-2xl min-w-[150px]"><p class="text-[10px] font-bold text-primary-bright uppercase">Active Placement</p><p class="text-sm font-bold">Sgt. James Miller</p><p class="text-[10px] text-text-muted">Fayetteville, NC</p></div></div><div class="absolute bottom-8 left-8 bg-card-dark/95 border border-border-dark p-4 rounded-xl shadow-2xl z-10"><h3 class="text-xs font-bold mb-3 uppercase tracking-widest text-text-muted">Map Legend</h3><div class="space-y-2"><div class="flex items-center gap-2"><div class="size-2 bg-primary rounded-full"></div><span class="text-[10px]">Veteran in Queue</span></div><div class="flex items-center gap-2"><div class="size-2 bg-yellow-500 rounded-full"></div><span class="text-[10px]">Available Housing</span></div></div></div></div>
+            <header class="h-20 border-b border-border-dark flex items-center justify-between px-8 bg-card-dark shrink-0 z-10">
+                <h2 class="text-xl font-bold">Geospatial Placement Intelligence</h2>
+            </header>
+            <div class="flex-1 relative bg-[#001524]">
+                <img src="https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/-78.878,35.052,11,0/1200x800?access_token=pk.eyJ1IjoiY2p4eGZ4Z3Z4MDExZzN4bXp4Z3Z4MDExZCJ9.x-x-x-x" class="absolute inset-0 w-full h-full object-cover opacity-40 grayscale" alt="Fayetteville Map">
+                
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <div class="size-4 bg-primary rounded-full animate-ping absolute"></div>
+                    <div class="size-4 bg-primary rounded-full relative border-2 border-white shadow-lg shadow-primary/50"></div>
+                    <div class="mt-4 bg-card-dark/95 border border-primary/40 p-4 rounded-lg shadow-2xl min-w-[200px]">
+                        <p class="text-[10px] font-bold text-primary-bright uppercase tracking-widest">Active Search</p>
+                        <p class="text-lg font-bold">Sgt. James Miller</p>
+                        <p class="text-[10px] text-text-muted flex items-center gap-1 mt-1"><span class="material-symbols-outlined text-xs">location_on</span> Fayetteville, NC</p>
+                    </div>
+                </div>
+            </div>
         </main>
     </div>
 </body>
