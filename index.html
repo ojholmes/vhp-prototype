@@ -9,17 +9,19 @@
     <script>
         tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'primary': '#008080', 'primary-bright': '#2dd4bf', 'background-dark': '#00101d', 'card-dark': '#001830', 'border-dark': '#162a45' } } } }
         
+        // PERSISTENCE LOGIC: Swaps views without reloading the page
         function showView(viewId) {
             const views = ['queue-view', 'map-view', 'vault-view', 'landlord-view'];
             views.forEach(id => document.getElementById(id).classList.add('hidden'));
             document.getElementById(viewId).classList.remove('hidden');
+            
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('bg-primary/20', 'text-primary-bright', 'border-primary/30'));
             event.currentTarget.classList.add('bg-primary/20', 'text-primary-bright', 'border-primary/30');
         }
     </script>
     <style>
         .map-underlay {
-            background-image: linear-gradient(rgba(0,16,29,0.6), rgba(0,16,29,0.6)), 
+            background-image: linear-gradient(rgba(0,16,29,0.5), rgba(0,16,29,0.5)), 
                               url('https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/-78.8784,35.0527,12,0/1200x800?access_token=pk.eyJ1IjoiY29tcGFzcy1kZW1vIiwiYSI6ImNscW9ycW1xejBicmkyanA0M3h4ZzZ4eXgifQ==');
             background-size: cover; background-position: center;
         }
@@ -34,54 +36,71 @@
         </div>
         <nav class="flex flex-col gap-1 px-4 flex-1">
             <button onclick="showView('queue-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-primary-bright border border-primary/30 text-left">
-                <span class="material-symbols-outlined text-sm">dashboard</span><span class="text-xs font-bold uppercase">Queue</span>
+                <span class="material-symbols-outlined text-sm">dashboard</span><span class="text-xs font-bold uppercase">Veteran Queue</span>
             </button>
             <button onclick="showView('map-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 text-left">
-                <span class="material-symbols-outlined text-sm">map</span><span class="text-xs font-bold uppercase">Geospatial</span>
+                <span class="material-symbols-outlined text-sm">map</span><span class="text-xs font-bold uppercase">Geospatial Intel</span>
             </button>
             <button onclick="showView('vault-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 text-left">
-                <span class="material-symbols-outlined text-sm">lock</span><span class="text-xs font-bold uppercase">Vault</span>
+                <span class="material-symbols-outlined text-sm">lock</span><span class="text-xs font-bold uppercase">Secure Vault</span>
             </button>
             <button onclick="showView('landlord-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 text-left">
                 <span class="material-symbols-outlined text-sm">apartment</span><span class="text-xs font-bold uppercase">Landlords</span>
             </button>
         </nav>
-        <div class="px-4 py-4 border-t border-border-dark bg-black/20">
-            <p class="text-[10px] font-bold text-white mb-1">Focus: Sgt. Miller</p>
-            <div class="w-full bg-white/10 h-1 rounded-full overflow-hidden"><div class="bg-primary-bright h-full" style="width: 85%"></div></div>
+        <div class="p-4 bg-black/20 mx-4 rounded-xl border border-white/5">
+            <p class="text-[10px] font-bold text-white mb-1 uppercase tracking-tighter">Active: Sgt. Miller</p>
+            <div class="w-full bg-white/10 h-1 rounded-full"><div class="bg-primary-bright h-full" style="width: 85%"></div></div>
         </div>
     </aside>
 
     <main class="flex-1 relative flex flex-col overflow-hidden">
-        <section id="queue-view" class="flex-1 p-10 overflow-y-auto">
-             <h1 class="text-sm font-black uppercase tracking-widest mb-8 text-slate-500">Veteran Queue</h1>
-             <div class="bg-card-dark border border-border-dark p-8 rounded-2xl max-w-4xl">
-                <h2 class="text-3xl font-black mb-2">Sgt. James Miller</h2>
-                <span class="text-red-500 font-mono font-bold text-xl">Risk Score: 95</span>
-                <button class="w-full mt-8 bg-primary py-4 rounded-xl font-bold uppercase tracking-widest">Verify & Issue Voucher</button>
-             </div>
+        
+        <section id="queue-view" class="flex-1 p-8 overflow-y-auto">
+            <div class="grid grid-cols-12 gap-6">
+                <div class="col-span-8 bg-card-dark border border-border-dark p-8 rounded-2xl">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h2 class="text-3xl font-black italic">Sgt. James Miller</h2>
+                            <p class="font-mono text-xs text-slate-500 uppercase">US Marine Corps | ID: #VHP-88329</p>
+                        </div>
+                        <div class="size-16 rounded-full border-4 border-red-500 flex items-center justify-center font-black text-xl text-red-500">95</div>
+                    </div>
+                    <button class="w-full bg-primary hover:bg-primary-bright py-4 rounded-xl font-black uppercase tracking-widest transition-all">Verify & Issue Voucher</button>
+                </div>
+                <div class="col-span-4 space-y-4">
+                    <div class="p-4 bg-white/5 rounded-xl border border-white/5 font-bold text-xs text-yellow-500">Cpl. Sarah Jenkins [Score: 82]</div>
+                    <div class="p-4 bg-white/5 rounded-xl border border-white/5 font-bold text-xs text-slate-500">PO2 Robert Chen [Score: 45]</div>
+                </div>
+            </div>
         </section>
 
         <section id="map-view" class="hidden flex-1 map-underlay relative">
-            <div class="absolute inset-0 bg-background-dark/30"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary-bright">
-                <span class="material-symbols-outlined text-5xl animate-bounce">location_on</span>
-                <div class="bg-card-dark border border-primary p-4 rounded-xl mt-2 w-48 shadow-2xl">
-                    <p class="text-xs font-bold">Fayetteville, NC</p>
-                    <p class="text-[10px] text-slate-400">Target: Sgt. Miller</p>
+            <div class="absolute inset-0 bg-background-dark/20"></div>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
+                <span class="material-symbols-outlined text-primary-bright text-5xl drop-shadow-[0_0_10px_#2dd4bf]">location_on</span>
+                <div class="bg-card-dark border border-primary/50 p-4 rounded-xl mt-2 w-48 shadow-2xl opacity-100 transition-opacity">
+                    <p class="text-[10px] font-black uppercase text-primary-bright">Target Identified</p>
+                    <p class="text-sm font-bold">Sgt. James Miller</p>
                 </div>
             </div>
         </section>
 
-        <section id="vault-view" class="hidden flex-1 p-10">
-            <h2 class="text-xl font-black uppercase mb-8">Secure Vault</h2>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="p-6 bg-card-dark border border-border-dark rounded-xl">
-                    <span class="material-symbols-outlined text-primary-bright">description</span>
-                    <p class="mt-2 font-bold">DD-214_Certified.pdf</p>
-                </div>
+        <section id="landlord-view" class="hidden flex-1 p-8 overflow-y-auto">
+            <h3 class="text-sm font-black uppercase mb-6 tracking-widest">Property Asset Management</h3>
+            <div class="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-white/5 text-slate-500 uppercase">
+                        <tr><th class="p-4">Property</th><th class="p-4">Units</th><th class="p-4">Financials</th></tr>
+                    </thead>
+                    <tbody class="divide-y divide-border-dark">
+                        <tr><td class="p-4 font-bold">Harbor View Apartments</td><td class="p-4">12 Units</td><td class="p-4 text-primary-bright font-mono">$124,500</td></tr>
+                        <tr><td class="p-4 font-bold">Oak Ridge Properties</td><td class="p-4">8 Units</td><td class="p-4 text-primary-bright font-mono">$82,300</td></tr>
+                    </tbody>
+                </table>
             </div>
         </section>
+
     </main>
 </body>
 </html>
