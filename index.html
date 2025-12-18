@@ -2,102 +2,102 @@
 <html class="dark" lang="en">
 <head>
     <meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>VHP | Unified Command</title>
+    <title>VHP | Command Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200..800&family=JetBrains+Mono&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=JetBrains+Mono&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap" rel="stylesheet"/>
     <script>
-        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'primary': '#008080', 'primary-bright': '#2dd4bf', 'background-dark': '#00101d', 'card-dark': '#001830', 'border-dark': '#162a45' } } } }
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'primary': '#008080', 'background-dark': '#00101d', 'card-dark': '#001830', 'border-dark': '#162a45' } } } }
         
-        // PERSISTENCE LOGIC: Swaps views without reloading the page
-        function showView(viewId) {
-            const views = ['queue-view', 'map-view', 'vault-view', 'landlord-view'];
-            views.forEach(id => document.getElementById(id).classList.add('hidden'));
+        // This function swaps views WITHOUT reloading the page, keeping data alive
+        function switchView(viewId) {
+            document.querySelectorAll('.app-view').forEach(v => v.classList.add('hidden'));
             document.getElementById(viewId).classList.remove('hidden');
-            
-            document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('bg-primary/20', 'text-primary-bright', 'border-primary/30'));
-            event.currentTarget.classList.add('bg-primary/20', 'text-primary-bright', 'border-primary/30');
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('bg-primary/20', 'text-white'));
+            event.currentTarget.classList.add('bg-primary/20', 'text-white');
         }
     </script>
     <style>
-        .map-underlay {
+        .fayetteville-map {
             background-image: linear-gradient(rgba(0,16,29,0.5), rgba(0,16,29,0.5)), 
                               url('https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/-78.8784,35.0527,12,0/1200x800?access_token=pk.eyJ1IjoiY29tcGFzcy1kZW1vIiwiYSI6ImNscW9ycW1xejBicmkyanA0M3h4ZzZ4eXgifQ==');
             background-size: cover; background-position: center;
         }
     </style>
 </head>
-<body class="bg-background-dark text-white font-sans h-screen flex overflow-hidden">
+<body class="bg-background-dark text-slate-300 font-sans h-screen flex overflow-hidden">
 
-    <aside class="w-64 border-r border-border-dark bg-[#001529] py-6 flex flex-col shrink-0">
-        <div class="px-6 mb-10 flex items-center gap-2">
-            <div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-xs">VH</div>
-            <span class="text-primary-bright font-black tracking-tighter text-xl italic uppercase">Navigator</span>
+    <aside class="w-64 border-r border-border-dark bg-[#000d1a] py-8 flex flex-col shrink-0">
+        <div class="px-6 mb-12 flex items-center gap-3">
+            <div class="size-9 bg-primary rounded-lg flex items-center justify-center font-black text-white">VH</div>
+            <span class="font-black tracking-tighter text-xl text-white uppercase italic">Navigator</span>
         </div>
-        <nav class="flex flex-col gap-1 px-4 flex-1">
-            <button onclick="showView('queue-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-primary-bright border border-primary/30 text-left">
-                <span class="material-symbols-outlined text-sm">dashboard</span><span class="text-xs font-bold uppercase">Veteran Queue</span>
+        <nav class="flex flex-col gap-2 px-4 flex-1">
+            <button onclick="switchView('queue')" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl bg-primary/20 text-white transition-all text-left">
+                <span class="material-symbols-outlined text-sm">group</span><span class="text-xs font-bold uppercase tracking-widest">Veteran Queue</span>
             </button>
-            <button onclick="showView('map-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 text-left">
-                <span class="material-symbols-outlined text-sm">map</span><span class="text-xs font-bold uppercase">Geospatial Intel</span>
+            <button onclick="switchView('map')" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-left">
+                <span class="material-symbols-outlined text-sm">map</span><span class="text-xs font-bold uppercase tracking-widest">Geospatial</span>
             </button>
-            <button onclick="showView('vault-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 text-left">
-                <span class="material-symbols-outlined text-sm">lock</span><span class="text-xs font-bold uppercase">Secure Vault</span>
-            </button>
-            <button onclick="showView('landlord-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 text-left">
-                <span class="material-symbols-outlined text-sm">apartment</span><span class="text-xs font-bold uppercase">Landlords</span>
+            <button onclick="switchView('vault')" class="nav-btn flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-white/5 transition-all text-left">
+                <span class="material-symbols-outlined text-sm">lock</span><span class="text-xs font-bold uppercase tracking-widest">Secure Vault</span>
             </button>
         </nav>
-        <div class="p-4 bg-black/20 mx-4 rounded-xl border border-white/5">
-            <p class="text-[10px] font-bold text-white mb-1 uppercase tracking-tighter">Active: Sgt. Miller</p>
-            <div class="w-full bg-white/10 h-1 rounded-full"><div class="bg-primary-bright h-full" style="width: 85%"></div></div>
+        <div class="m-4 p-4 bg-primary/10 rounded-2xl border border-primary/20">
+            <p class="text-[10px] font-black text-primary uppercase mb-2">Active Target</p>
+            <p class="text-sm font-bold text-white">Sgt. James Miller</p>
+            <p class="text-[10px] font-mono text-slate-500">ID: VHP-88329</p>
         </div>
     </aside>
 
-    <main class="flex-1 relative flex flex-col overflow-hidden">
+    <main class="flex-1 flex flex-col relative">
         
-        <section id="queue-view" class="flex-1 p-8 overflow-y-auto">
-            <div class="grid grid-cols-12 gap-6">
-                <div class="col-span-8 bg-card-dark border border-border-dark p-8 rounded-2xl">
-                    <div class="flex justify-between items-start mb-6">
-                        <div>
-                            <h2 class="text-3xl font-black italic">Sgt. James Miller</h2>
-                            <p class="font-mono text-xs text-slate-500 uppercase">US Marine Corps | ID: #VHP-88329</p>
-                        </div>
-                        <div class="size-16 rounded-full border-4 border-red-500 flex items-center justify-center font-black text-xl text-red-500">95</div>
+        <section id="queue" class="app-view flex-1 p-10 overflow-y-auto">
+            <div class="max-w-4xl mx-auto">
+                <header class="mb-10 flex justify-between items-end">
+                    <div>
+                        <h1 class="text-4xl font-black text-white tracking-tighter italic">Case Management</h1>
+                        <p class="text-slate-500 font-mono text-xs uppercase tracking-[0.3em]">Priority Alpha: High Distress</p>
                     </div>
-                    <button class="w-full bg-primary hover:bg-primary-bright py-4 rounded-xl font-black uppercase tracking-widest transition-all">Verify & Issue Voucher</button>
-                </div>
-                <div class="col-span-4 space-y-4">
-                    <div class="p-4 bg-white/5 rounded-xl border border-white/5 font-bold text-xs text-yellow-500">Cpl. Sarah Jenkins [Score: 82]</div>
-                    <div class="p-4 bg-white/5 rounded-xl border border-white/5 font-bold text-xs text-slate-500">PO2 Robert Chen [Score: 45]</div>
+                    <div class="text-right">
+                        <p class="text-[10px] font-black text-primary">SYSTEM HEALTH</p>
+                        <p class="text-xl font-black text-white">99.8%</p>
+                    </div>
+                </header>
+                <div class="bg-card-dark border border-border-dark p-10 rounded-[2rem] shadow-2xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 p-8">
+                        <div class="size-20 rounded-full border-4 border-red-500 flex items-center justify-center font-black text-2xl text-red-500 shadow-[0_0_20px_rgba(239,68,68,0.3)]">95</div>
+                    </div>
+                    <h2 class="text-4xl font-black text-white mb-2">Sgt. James Miller</h2>
+                    <p class="text-primary font-bold tracking-widest text-xs mb-8">ACTIVE COMBAT VET | 2-TOUR OEF/OIF</p>
+                    <button class="w-full bg-primary hover:bg-[#00a3a3] text-white py-5 rounded-2xl font-black uppercase tracking-[0.2em] transition-all transform active:scale-[0.98]">Verify & Issue Voucher</button>
                 </div>
             </div>
         </section>
 
-        <section id="map-view" class="hidden flex-1 map-underlay relative">
+        <section id="map" class="app-view hidden flex-1 fayetteville-map relative">
             <div class="absolute inset-0 bg-background-dark/20"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
-                <span class="material-symbols-outlined text-primary-bright text-5xl drop-shadow-[0_0_10px_#2dd4bf]">location_on</span>
-                <div class="bg-card-dark border border-primary/50 p-4 rounded-xl mt-2 w-48 shadow-2xl opacity-100 transition-opacity">
-                    <p class="text-[10px] font-black uppercase text-primary-bright">Target Identified</p>
-                    <p class="text-sm font-bold">Sgt. James Miller</p>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center group">
+                <div class="size-12 bg-primary/30 rounded-full animate-ping absolute -top-2 -left-1"></div>
+                <span class="material-symbols-outlined text-primary text-5xl cursor-pointer">location_on</span>
+                <div class="mt-4 bg-card-dark border border-primary p-4 rounded-2xl shadow-2xl w-56">
+                    <p class="text-[10px] font-black text-primary uppercase mb-1 tracking-widest">Active Focus</p>
+                    <p class="text-sm font-bold text-white">Sgt. James Miller</p>
+                    <p class="text-[10px] mt-1 text-slate-400">0.8 mi from Fayetteville VA</p>
                 </div>
             </div>
         </section>
 
-        <section id="landlord-view" class="hidden flex-1 p-8 overflow-y-auto">
-            <h3 class="text-sm font-black uppercase mb-6 tracking-widest">Property Asset Management</h3>
-            <div class="bg-card-dark border border-border-dark rounded-xl overflow-hidden">
-                <table class="w-full text-left text-xs">
-                    <thead class="bg-white/5 text-slate-500 uppercase">
-                        <tr><th class="p-4">Property</th><th class="p-4">Units</th><th class="p-4">Financials</th></tr>
-                    </thead>
-                    <tbody class="divide-y divide-border-dark">
-                        <tr><td class="p-4 font-bold">Harbor View Apartments</td><td class="p-4">12 Units</td><td class="p-4 text-primary-bright font-mono">$124,500</td></tr>
-                        <tr><td class="p-4 font-bold">Oak Ridge Properties</td><td class="p-4">8 Units</td><td class="p-4 text-primary-bright font-mono">$82,300</td></tr>
-                    </tbody>
-                </table>
+        <section id="vault" class="app-view hidden flex-1 p-10">
+            <h2 class="text-2xl font-black text-white italic mb-10 tracking-tight">Secure Document Intelligence</h2>
+            <div class="grid grid-cols-2 gap-6">
+                <div class="bg-card-dark border border-border-dark p-8 rounded-3xl flex items-center gap-6 hover:border-primary transition-all cursor-pointer">
+                    <span class="material-symbols-outlined text-4xl text-primary">description</span>
+                    <div>
+                        <p class="font-bold text-white uppercase tracking-tighter">DD-214_Certified.pdf</p>
+                        <p class="text-[10px] font-black text-green-500 uppercase">Status: Verified</p>
+                    </div>
+                </div>
             </div>
         </section>
 
