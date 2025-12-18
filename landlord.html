@@ -5,51 +5,59 @@
     <title>VHP | Landlord Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200..800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script>
-          tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#008080", "primary-bright": "#2dd4bf", "background-dark": "#00101d", "deep-navy": "#002147", "card-dark": "#001830", "border-dark": "#162a45", "text-muted": "#94a3b8" }, fontFamily: { "display": ["Inter", "sans-serif"] } } } }
+        tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#008080", "primary-bright": "#2dd4bf", "background-dark": "#00101d", "deep-navy": "#002147", "card-dark": "#001830", "border-dark": "#162a45", "text-muted": "#94a3b8" } } } }
+        function calculateIncentive() {
+            const units = document.getElementById('unit-input').value;
+            const total = units * 1500;
+            document.getElementById('incentive-result').innerText = '$' + total.toLocaleString();
+        }
     </script>
 </head>
-<body class="bg-background-dark text-white font-display overflow-hidden h-screen flex">
-    <div class="flex w-full h-full">
-        <aside class="w-64 flex flex-col border-r border-border-dark bg-deep-navy py-6 shrink-0">
-            <div class="px-6 mb-8 flex items-center gap-2"><div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-white text-xs">VH</div><span class="text-primary-bright font-bold text-lg">Navigator</span></div>
-            <nav class="flex flex-col gap-2 px-4">
-                <a href="index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5 transition-all"><span class="material-symbols-outlined">supervised_user_circle</span><span class="text-sm">Veteran Queue</span></a>
-                <a href="landlord.html" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-white border border-primary/30"><span class="material-symbols-outlined text-primary-bright">real_estate_agent</span><span class="text-sm font-medium">Landlord Portal</span></a>
-                <a href="partners.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5 transition-all"><span class="material-symbols-outlined">map</span><span class="text-sm font-medium">Geospatial Map</span></a>
-                <a href="portal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5 transition-all"><span class="material-symbols-outlined">encrypted</span><span class="text-sm font-medium">Document Vault</span></a>
-                <a href="ai.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5 transition-all"><span class="material-symbols-outlined">psychology</span><span class="text-sm font-medium">AI Command</span></a>
-                <a href="audit.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5 transition-all"><span class="material-symbols-outlined">assignment_turned_in</span><span class="text-sm font-medium">Federal Audit</span></a>
-            </nav>
-        </aside>
+<body class="bg-background-dark text-white font-sans overflow-hidden h-screen flex">
+    <aside class="w-64 border-r border-border-dark bg-deep-navy py-6 shrink-0 flex flex-col">
+        <div class="px-6 mb-8 flex items-center gap-2"><div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-xs">VH</div><span class="text-primary-bright font-bold text-lg">Navigator</span></div>
+        <nav class="flex flex-col gap-2 px-4">
+            <a href="index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined">supervised_user_circle</span><span class="text-sm">Veteran Queue</span></a>
+            <a href="landlord.html" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-white border border-primary/30"><span class="material-symbols-outlined text-primary-bright">real_estate_agent</span><span class="text-sm">Landlord Portal</span></a>
+            <a href="partners.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined">map</span><span class="text-sm">Geospatial Map</span></a>
+        </nav>
+    </aside>
 
-        <main class="flex-1 flex flex-col overflow-hidden">
-            <header class="h-20 border-b border-border-dark flex items-center justify-between px-8 bg-card-dark shrink-0">
-                <h2 class="text-xl font-bold">Landlord Management</h2>
-                <div class="flex items-center gap-6">
-                    <div class="flex flex-col items-end"><span class="text-[10px] text-text-muted font-bold">REVENUE DISBURSED</span><span class="text-lg font-bold text-primary-bright font-mono">$1.2M</span></div>
-                    <div class="flex flex-col items-end"><span class="text-[10px] text-text-muted font-bold">VETERANS PLACED</span><span class="text-lg font-bold text-white">342</span></div>
-                </div>
-            </header>
+    <main class="flex-1 flex flex-col overflow-hidden">
+        <header class="h-20 border-b border-border-dark flex items-center justify-between px-8 bg-card-dark">
+            <h2 class="text-xl font-bold">Private Sector Incentives</h2>
+            <div class="bg-primary/10 border border-primary/40 px-4 py-1 rounded-full"><span class="text-xs font-bold text-primary-bright tracking-widest uppercase">FY25 Disbursement: $1.2M</span></div>
+        </header>
 
-            <div class="p-8 overflow-y-auto">
-                <div class="bg-card-dark border border-border-dark rounded-xl overflow-hidden shadow-2xl">
-                    <table class="w-full text-left">
-                        <thead class="bg-background-dark/50 border-b border-border-dark text-[10px] font-bold text-text-muted uppercase tracking-widest">
-                            <tr><th class="px-6 py-4">Property Group</th><th class="px-6 py-4">Financial Status</th><th class="px-6 py-4">Leases Active</th><th class="px-6 py-4">Expiring soon</th><th class="px-6 py-4 text-right">Incentive Total</th></tr>
-                        </thead>
-                        <tbody class="divide-y divide-border-dark text-sm">
-                            <tr class="hover:bg-white/5"><td class="px-6 py-4 font-bold text-white">Harbor View Apartments</td><td class="px-6 py-4"><span class="bg-green-500/10 text-green-500 text-[10px] px-2 py-0.5 rounded border border-green-500/20 font-bold uppercase">Paid Current</span></td><td class="px-6 py-4">12 Units</td><td class="px-6 py-4 font-mono text-xs">2 Leases (30d)</td><td class="px-6 py-4 text-right text-text-muted font-mono font-bold">$124,500.00</td></tr>
-                            <tr class="hover:bg-white/5"><td class="px-6 py-4 font-bold text-white">Oak Ridge Properties</td><td class="px-6 py-4"><span class="bg-green-500/10 text-green-500 text-[10px] px-2 py-0.5 rounded border border-green-500/20 font-bold uppercase">Paid Current</span></td><td class="px-6 py-4">8 Units</td><td class="px-6 py-4 font-mono text-xs">0 Leases</td><td class="px-6 py-4 text-right text-text-muted font-mono font-bold">$82,300.00</td></tr>
-                            <tr class="hover:bg-white/5"><td class="px-6 py-4 font-bold text-white">Blue Star Residential</td><td class="px-6 py-4"><span class="bg-yellow-500/10 text-yellow-500 text-[10px] px-2 py-0.5 rounded border border-yellow-500/20 font-bold uppercase">In-Review</span></td><td class="px-6 py-4">15 Units</td><td class="px-6 py-4 font-mono text-xs text-yellow-500">4 Leases (15d)</td><td class="px-6 py-4 text-right text-text-muted font-mono font-bold">$150,000.00</td></tr>
-                            <tr class="hover:bg-white/5"><td class="px-6 py-4 font-bold text-white">Metro Housing Group</td><td class="px-6 py-4"><span class="bg-green-500/10 text-green-500 text-[10px] px-2 py-0.5 rounded border border-green-500/20 font-bold uppercase">Paid Current</span></td><td class="px-6 py-4">4 Units</td><td class="px-6 py-4 font-mono text-xs">1 Lease (60d)</td><td class="px-6 py-4 text-right text-text-muted font-mono font-bold">$44,000.00</td></tr>
-                            <tr class="hover:bg-white/5"><td class="px-6 py-4 font-bold text-white">Fayetteville Rentals LLC</td><td class="px-6 py-4"><span class="bg-green-500/10 text-green-500 text-[10px] px-2 py-0.5 rounded border border-green-500/20 font-bold uppercase">Paid Current</span></td><td class="px-6 py-4">3 Units</td><td class="px-6 py-4 font-mono text-xs">0 Leases</td><td class="px-6 py-4 text-right text-text-muted font-mono font-bold">$31,200.00</td></tr>
-                        </tbody>
-                    </table>
+        <div class="p-8 grid grid-cols-12 gap-8 overflow-y-auto">
+            <div class="col-span-12 lg:col-span-4 bg-gradient-to-br from-card-dark to-deep-navy border border-primary/30 rounded-2xl p-6 shadow-2xl">
+                <h3 class="text-sm font-bold uppercase tracking-widest text-primary-bright mb-6">Partner ROI Calculator</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="text-[10px] font-bold text-text-muted uppercase mb-2 block">Number of Units to Enroll</label>
+                        <input type="number" id="unit-input" oninput="calculateIncentive()" placeholder="e.g. 5" class="w-full bg-background-dark border border-white/10 rounded-lg p-3 text-white focus:border-primary-bright outline-none">
+                    </div>
+                    <div class="bg-primary/5 p-4 rounded-xl border border-primary/10">
+                        <p class="text-[10px] text-text-muted uppercase font-bold">Estimated Monthly Incentive</p>
+                        <p class="text-3xl font-black text-primary-bright" id="incentive-result">$0</p>
+                    </div>
                 </div>
             </div>
-        </main>
-    </div>
+
+            <div class="col-span-12 lg:col-span-8 bg-card-dark border border-border-dark rounded-2xl overflow-hidden shadow-xl">
+                 <table class="w-full text-left">
+                    <thead class="bg-black/40 text-[10px] font-bold text-text-muted uppercase tracking-widest border-b border-border-dark">
+                        <tr><th class="px-6 py-4">Property Partner</th><th class="px-6 py-4">Financial Health</th><th class="px-6 py-4 text-right">Last Payout</th></tr>
+                    </thead>
+                    <tbody class="divide-y divide-border-dark text-sm">
+                        <tr><td class="px-6 py-5 font-bold">Harbor View Apartments</td><td class="px-6 py-5"><span class="bg-green-500/10 text-green-500 text-[10px] px-2 py-1 rounded border border-green-500/20 font-bold uppercase">PAID CURRENT</span></td><td class="px-6 py-5 text-right font-mono font-bold">$2,400.00</td></tr>
+                        <tr><td class="px-6 py-5 font-bold">Oak Ridge Properties</td><td class="px-6 py-5"><span class="bg-green-500/10 text-green-500 text-[10px] px-2 py-1 rounded border border-green-500/20 font-bold uppercase">PAID CURRENT</span></td><td class="px-6 py-5 text-right font-mono font-bold">$1,600.00</td></tr>
+                    </tbody>
+                 </table>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
