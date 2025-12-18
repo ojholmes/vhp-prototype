@@ -3,19 +3,21 @@ import asyncio
 from playwright.async_api import async_playwright
 
 async def main():
+    urls = [
+        "http://localhost:8000/index.html",
+        "http://localhost:8000/audit.html",
+        "http://localhost:8000/partners.html",
+        "http://localhost:8000/portal.html",
+        "http://localhost:8000/home.html",
+        "http://localhost:8000/landlord.html",
+    ]
     async with async_playwright() as p:
         browser = await p.chromium.launch()
         page = await browser.new_page()
-
-        # Navigate to the home page
-        await page.goto("http://localhost:8000/home.html")
-        await page.screenshot(path="/home/jules/verification/home_page.png")
-
-        # Click the "Federal Audit" link
-        await page.click('a[href="audit.html"]')
-        await page.wait_for_url("http://localhost:8000/audit.html")
-        await page.screenshot(path="/home/jules/verification/audit_from_home.png")
-
+        for i, url in enumerate(urls):
+            await page.goto(url)
+            await page.screenshot(path=f"screenshot_{i}.png")
         await browser.close()
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())

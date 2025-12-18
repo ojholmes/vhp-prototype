@@ -378,7 +378,12 @@
 <script>
     const supabaseUrl = 'https://qfymdqmqtrphxoqnipze.supabase.co';
     const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFmeW1kcW1xdHJwaHhvcW5pcHplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjU5NjU2MDcsImV4cCI6MjA4MTU0MTYwN30.rLl934YDxsYBChz779mfeKnUa4ayMFLyjqu7_XmGn5U';
-    const _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    let _supabase;
+    try {
+        _supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    } catch (error) {
+        console.error("Supabase initialization failed:", error);
+    }
     async function loadVeteranData() {
         try {
             // Updating UI to loading state
