@@ -15,35 +15,32 @@
         <div class="px-6 mb-8 flex items-center gap-2"><div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-xs">VH</div><span class="text-primary-bright font-bold text-lg">Navigator</span></div>
         <nav class="flex flex-col gap-2 px-4">
             <a href="index.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined">supervised_user_circle</span><span class="text-sm">Veteran Queue</span></a>
+            <a href="landlord.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined">real_estate_agent</span><span class="text-sm">Landlord Portal</span></a>
             <a href="partners.html" class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/20 text-white border border-primary/30"><span class="material-symbols-outlined text-primary-bright">map</span><span class="text-sm">Geospatial Map</span></a>
-            <a href="portal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined">encrypted</span><span class="text-sm">Document Vault</span></a>
+            <a href="portal.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined">encrypted</span><span class="text-sm font-medium">Document Vault</span></a>
             <a href="audit.html" class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-muted hover:bg-white/5"><span class="material-symbols-outlined">assignment_turned_in</span><span class="text-sm">Federal Audit</span></a>
         </nav>
     </aside>
 
     <main class="flex-1 relative flex flex-col">
-        <header class="h-20 border-b border-border-dark flex items-center justify-between px-8 bg-card-dark z-10">
+        <header class="h-20 border-b border-border-dark flex items-center justify-between px-8 bg-card-dark z-10 shadow-xl">
             <h2 class="text-xl font-bold">Placement Intelligence Map</h2>
-            <div class="bg-white/5 border border-white/10 px-3 py-1 rounded text-[10px] text-text-muted font-bold uppercase tracking-widest">Region: DC Metro / Fayetteville</div>
+            <div class="flex gap-2">
+                <div class="bg-white/5 border border-white/10 px-3 py-1 rounded text-[10px] text-text-muted font-bold uppercase tracking-widest">Live Region: Fayetteville, NC</div>
+            </div>
         </header>
 
-        <div class="flex-1 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/-78.8784,35.0527,12,0/1200x800?access_token=pk.eyJ1IjoiY29tcGFzcy1kZW1vIiwiYSI6ImNscW9ycW1xejBicmkyanA0M3h4ZzZ4eXgifQ==')] bg-cover bg-center relative">
-            <div class="absolute inset-0 bg-background-dark/40 backdrop-grayscale-[0.5]"></div>
-            
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group cursor-pointer">
-                <div class="size-4 bg-primary-bright rounded-full border-2 border-white animate-pulse"></div>
-                <div class="absolute top-6 left-1/2 -translate-x-1/2 w-48 bg-card-dark border border-primary/50 p-3 rounded-lg shadow-2xl">
-                    <p class="text-[9px] text-primary-bright font-bold uppercase mb-1">Active Placement</p>
-                    <p class="text-xs font-bold">Sgt. James Miller</p>
-                    <p class="text-[10px] text-text-muted">Distance to VA: 1.2 miles</p>
-                </div>
+        <div class="flex-1 bg-slate-900 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-40 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
+            <div class="absolute inset-0 flex items-center justify-center">
+                 <img src="https://api.mapbox.com/styles/v1/mapbox/dark-v11/static/-78.8784,35.0527,11,0/1200x800?access_token=pk.eyJ1IjoiY29tcGFzcy1kZW1vIiwiYSI6ImNscW9ycW1xejBicmkyanA0M3h4ZzZ4eXgifQ==" class="w-full h-full object-cover grayscale opacity-50" alt="Geospatial Map">
             </div>
-
-            <div class="absolute bottom-8 left-8 bg-card-dark/90 border border-border-dark p-4 rounded-xl backdrop-blur-md">
-                <h4 class="text-[10px] font-bold text-text-muted uppercase mb-3">Map Legend</h4>
-                <div class="space-y-2">
-                    <div class="flex items-center gap-3"><div class="size-2 rounded-full bg-primary-bright"></div><span class="text-[10px]">Veteran in Queue</span></div>
-                    <div class="flex items-center gap-3"><div class="size-2 rounded-full bg-yellow-500"></div><span class="text-[10px]">Available Housing</span></div>
+            
+            <div class="absolute top-10 left-10 p-4 bg-card-dark/80 backdrop-blur-md border border-primary/30 rounded-xl w-64 shadow-2xl">
+                <h3 class="text-[10px] font-bold text-primary-bright uppercase mb-4 tracking-tighter">Heatmap Legend</h3>
+                <div class="space-y-3">
+                    <div class="flex items-center gap-3"><div class="size-2 rounded-full bg-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div><span class="text-xs">Critical Housing Need</span></div>
+                    <div class="flex items-center gap-3"><div class="size-2 rounded-full bg-primary-bright"></div><span class="text-xs">Available Vouchers</span></div>
                 </div>
             </div>
         </div>
