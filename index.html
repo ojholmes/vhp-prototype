@@ -7,15 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200..800&family=JetBrains+Mono&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@400&display=swap" rel="stylesheet"/>
     <script>
-        tailwind.config = { darkMode: "class", theme: { extend: { colors: { "primary": "#008080", "primary-bright": "#2dd4bf", "background-dark": "#00101d", "card-dark": "#001830", "border-dark": "#162a45" } } } }
+        tailwind.config = { darkMode: 'class', theme: { extend: { colors: { 'primary': '#008080', 'primary-bright': '#2dd4bf', 'background-dark': '#00101d', 'card-dark': '#001830', 'border-dark': '#162a45' } } } }
         
-        // PIVOT 2 LOGIC: THE VIEW SWITCHER
         function showView(viewId) {
             const views = ['queue-view', 'map-view', 'vault-view', 'landlord-view'];
             views.forEach(id => document.getElementById(id).classList.add('hidden'));
             document.getElementById(viewId).classList.remove('hidden');
-            
-            // Update Active Tab Styling
             document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('bg-primary/20', 'text-primary-bright', 'border-primary/30'));
             event.currentTarget.classList.add('bg-primary/20', 'text-primary-bright', 'border-primary/30');
         }
@@ -32,18 +29,18 @@
 
     <aside class="w-64 border-r border-border-dark bg-[#001529] py-6 flex flex-col shrink-0">
         <div class="px-6 mb-10 flex items-center gap-2">
-            <div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-xs shadow-[0_0_15px_#008080]">VH</div>
+            <div class="size-8 bg-primary rounded flex items-center justify-center font-bold text-xs">VH</div>
             <span class="text-primary-bright font-black tracking-tighter text-xl italic uppercase">Navigator</span>
         </div>
         <nav class="flex flex-col gap-1 px-4 flex-1">
-            <button onclick="showView('queue-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 bg-primary/20 text-primary-bright border border-primary/30 text-left">
-                <span class="material-symbols-outlined text-sm">dashboard</span><span class="text-xs font-bold uppercase">Veteran Queue</span>
+            <button onclick="showView('queue-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 text-primary-bright border border-primary/30 text-left">
+                <span class="material-symbols-outlined text-sm">dashboard</span><span class="text-xs font-bold uppercase">Queue</span>
             </button>
             <button onclick="showView('map-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 text-left">
                 <span class="material-symbols-outlined text-sm">map</span><span class="text-xs font-bold uppercase">Geospatial</span>
             </button>
             <button onclick="showView('vault-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 text-left">
-                <span class="material-symbols-outlined text-sm">lock</span><span class="text-xs font-bold uppercase">Secure Vault</span>
+                <span class="material-symbols-outlined text-sm">lock</span><span class="text-xs font-bold uppercase">Vault</span>
             </button>
             <button onclick="showView('landlord-view')" class="nav-link flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-400 hover:bg-white/5 text-left">
                 <span class="material-symbols-outlined text-sm">apartment</span><span class="text-xs font-bold uppercase">Landlords</span>
@@ -51,77 +48,40 @@
         </nav>
         <div class="px-4 py-4 border-t border-border-dark bg-black/20">
             <p class="text-[10px] font-bold text-white mb-1">Focus: Sgt. Miller</p>
-            <div class="w-full bg-white/10 h-1 rounded-full overflow-hidden">
-                <div class="bg-primary-bright h-full" style="width: 85%"></div>
-            </div>
-            <p class="text-[8px] text-slate-500 mt-2 uppercase tracking-widest text-center">Eligibility: 85% Complete</p>
+            <div class="w-full bg-white/10 h-1 rounded-full overflow-hidden"><div class="bg-primary-bright h-full" style="width: 85%"></div></div>
         </div>
     </aside>
 
-    <main class="flex-1 flex flex-col relative overflow-hidden">
-        
-        <section id="queue-view" class="flex-1 flex flex-col">
-            <header class="h-20 border-b border-border-dark flex items-center justify-between px-10 bg-card-dark/30">
-                <h1 class="text-sm font-black uppercase tracking-widest">Case Management Alpha</h1>
-                <span class="text-[10px] bg-red-500/10 border border-red-500/50 text-red-500 px-3 py-1 rounded-full font-bold">3 CRITICAL ACTIONS</span>
-            </header>
-            <div class="p-10 grid grid-cols-12 gap-6 h-full overflow-y-auto">
-                <div class="col-span-8 bg-card-dark border border-border-dark p-8 rounded-2xl relative">
-                    <h2 class="text-3xl font-black text-white mb-2">Sgt. James Miller</h2>
-                    <p class="font-mono text-xs text-slate-500 mb-8 tracking-widest">USMC | ID: #VHP-88329</p>
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="bg-black/20 p-4 rounded-xl border border-white/5">
-                            <p class="text-[9px] uppercase font-black text-slate-500">Risk Score</p>
-                            <p class="text-2xl font-black text-red-500">95</p>
-                        </div>
-                        <div class="bg-black/20 p-4 rounded-xl border border-white/5">
-                            <p class="text-[9px] uppercase font-black text-slate-500">Deployment</p>
-                            <p class="text-sm font-bold">2-Tour OEF/OIF</p>
-                        </div>
-                    </div>
-                    <button class="w-full bg-primary hover:bg-primary-bright py-4 rounded-xl font-black uppercase tracking-widest transition-all">Verify & Issue Voucher</button>
-                </div>
-                <div class="col-span-4 space-y-4">
-                    <div class="p-4 bg-white/5 rounded-xl border border-white/5">
-                        <p class="text-[10px] font-bold text-yellow-500">Cpl. Sarah Jenkins</p>
-                        <p class="text-[9px] text-slate-500 italic">Eligibility Docs Pending</p>
-                    </div>
-                    <div class="p-4 bg-white/5 rounded-xl border border-white/5 opacity-50">
-                        <p class="text-[10px] font-bold text-slate-400">PO2 Robert Chen</p>
-                        <p class="text-[9px] text-slate-500 italic">Initial Screening</p>
-                    </div>
-                </div>
-            </div>
+    <main class="flex-1 relative flex flex-col overflow-hidden">
+        <section id="queue-view" class="flex-1 p-10 overflow-y-auto">
+             <h1 class="text-sm font-black uppercase tracking-widest mb-8 text-slate-500">Veteran Queue</h1>
+             <div class="bg-card-dark border border-border-dark p-8 rounded-2xl max-w-4xl">
+                <h2 class="text-3xl font-black mb-2">Sgt. James Miller</h2>
+                <span class="text-red-500 font-mono font-bold text-xl">Risk Score: 95</span>
+                <button class="w-full mt-8 bg-primary py-4 rounded-xl font-bold uppercase tracking-widest">Verify & Issue Voucher</button>
+             </div>
         </section>
 
-        <section id="map-view" class="hidden flex-1 relative map-underlay">
+        <section id="map-view" class="hidden flex-1 map-underlay relative">
             <div class="absolute inset-0 bg-background-dark/30"></div>
-            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary-bright text-center">
-                <div class="size-10 bg-primary-bright/20 rounded-full animate-ping absolute -top-1"></div>
-                <span class="material-symbols-outlined text-4xl">location_on</span>
-                <div class="bg-card-dark border border-primary/50 p-4 rounded-xl mt-4 w-48 shadow-2xl">
-                    <p class="text-[10px] font-black uppercase">Active Search</p>
-                    <p class="text-sm font-bold">Sgt. James Miller</p>
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary-bright">
+                <span class="material-symbols-outlined text-5xl animate-bounce">location_on</span>
+                <div class="bg-card-dark border border-primary p-4 rounded-xl mt-2 w-48 shadow-2xl">
+                    <p class="text-xs font-bold">Fayetteville, NC</p>
+                    <p class="text-[10px] text-slate-400">Target: Sgt. Miller</p>
                 </div>
             </div>
         </section>
 
-        <section id="vault-view" class="hidden flex-1 p-10 overflow-y-auto">
-            <h2 class="text-xl font-black uppercase tracking-widest mb-8">Secure Document Intelligence</h2>
-            <div class="grid grid-cols-3 gap-6">
-                <div class="bg-card-dark border border-border-dark p-6 rounded-2xl hover:border-primary-bright transition-all cursor-pointer">
-                    <span class="material-symbols-outlined text-3xl text-primary-bright mb-4">description</span>
-                    <p class="text-sm font-bold">DD-214_Certified.pdf</p>
-                    <p class="text-[9px] text-green-500 font-bold uppercase mt-1">Status: Verified</p>
-                </div>
-                <div class="bg-card-dark border border-border-dark p-6 rounded-2xl hover:border-primary-bright transition-all cursor-pointer">
-                    <span class="material-symbols-outlined text-3xl text-yellow-500 mb-4">verified_user</span>
-                    <p class="text-sm font-bold">Medical_Rating_Miller.pdf</p>
-                    <p class="text-[9px] text-yellow-500 font-bold uppercase mt-1">Status: In Review</p>
+        <section id="vault-view" class="hidden flex-1 p-10">
+            <h2 class="text-xl font-black uppercase mb-8">Secure Vault</h2>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="p-6 bg-card-dark border border-border-dark rounded-xl">
+                    <span class="material-symbols-outlined text-primary-bright">description</span>
+                    <p class="mt-2 font-bold">DD-214_Certified.pdf</p>
                 </div>
             </div>
         </section>
-
     </main>
 </body>
 </html>
